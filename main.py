@@ -3,13 +3,15 @@
 CNN Fear & Greed Index Notifier
 Fetches the current Fear & Greed Index and sends it to Discord.
 """
-
-import asyncio
 import os
 import sys
-from datetime import datetime, timezone
-
+import asyncio
 import aiohttp
+
+from datetime import datetime, timezone
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 
 async def get_fear_greed_index(session: aiohttp.ClientSession) -> dict:

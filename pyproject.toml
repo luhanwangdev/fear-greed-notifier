@@ -5,6 +5,7 @@ description = "CNN Fear & Greed Index notifier for Discord"
 requires-python = ">=3.11"
 dependencies = [
     "aiohttp>=3.9.0",
+    "python-dotenv>=1.2.1",
 ]
 
 [build-system]
