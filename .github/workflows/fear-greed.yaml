@@ -2,11 +2,11 @@ name: Fear & Greed Index Notifier
 
 on:
   schedule:
-    # UTC 1:00 = 台灣時間 9:00
-    - cron: '0 1 * * *'
-    # UTC 13:00 = 台灣時間 21:00
-    - cron: '0 13 * * *'
-  workflow_dispatch:  # 允許手動觸發
+    # UTC 2:27 = 台灣時間 10:27
+    - cron: "27 2 * * *"
+    # UTC 14:27 = 台灣時間 22:27
+    - cron: "27 14 * * *"
+  workflow_dispatch:
 
 jobs:
   notify:
