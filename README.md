@@ -10,7 +10,7 @@ Automatically fetches the CNN Fear & Greed Index and sends notifications to Disc
   - Visual progress bar
   - Color-coded based on score
   - Emoji matching the sentiment
-- Scheduled execution via GitHub Actions (9:00 AM and 9:00 PM Taiwan Time)
+- Scheduled execution via GitHub Actions (10:27 AM and 10:27 PM Taiwan Time)
 
 ## Installation
 
@@ -55,8 +55,8 @@ Add the following secret in Repository Settings > Secrets and variables > Action
 
 GitHub Actions is configured to run automatically at:
 
-- UTC 01:00 (Taiwan Time 09:00)
-- UTC 13:00 (Taiwan Time 21:00)
+- UTC 02:27 (Taiwan Time 10:27)
+- UTC 14:27 (Taiwan Time 22:27)
 
 You can also trigger it manually from the GitHub Actions page.
 
