@@ -1,5 +1,4 @@
 # Fear & Greed + VIX Market Signal Notifier
-# 恐懼與貪婪 + VIX 市場訊號通知器
 
 Comprehensive market analysis tool that combines CNN Fear & Greed Index with VIX volatility analysis to provide actionable trading signals.
 
@@ -16,12 +15,14 @@ Comprehensive market analysis tool that combines CNN Fear & Greed Index with VIX
 ## Features | 功能特色
 
 ### Fear & Greed Index | 恐懼與貪婪指數
+
 - Fetches the latest Fear & Greed Index data from CNN API
   - 從 CNN API 取得最新恐懼與貪婪指數資料
 - Visual sentiment indicators with color-coded ratings
   - 具有顏色編碼評級的視覺化情緒指標
 
 ### VIX Market Signal Analysis | VIX 市場訊號分析
+
 - Real-time VIX (Volatility Index) tracking
   - 即時 VIX（波動率指數）追蹤
 - 30-day historical trend analysis
@@ -42,6 +43,7 @@ Comprehensive market analysis tool that combines CNN Fear & Greed Index with VIX
   - 可執行的交易建議
 
 ### Notifications | 通知功能
+
 - Sends comprehensive market reports to Discord
   - 發送完整市場報告至 Discord
 - Scheduled execution via GitHub Actions (10:27 AM and 10:27 PM Taiwan Time)
@@ -90,8 +92,8 @@ uv run python main.py
 
 ### Environment Variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable              | Description         |
+| --------------------- | ------------------- |
 | `DISCORD_WEBHOOK_URL` | Discord Webhook URL |
 
 ### Local Execution
@@ -126,12 +128,14 @@ The VIX monitor analyzes volatility trends and generates entry signals based on:
 VIX 監控器分析波動率趨勢並基於以下條件生成進場訊號：
 
 1. **Market Phase Detection | 市場階段偵測**
+
    - Monitors VIX levels and trend direction
      - 監控 VIX 水平與趨勢方向
    - Identifies panic peaks and recovery periods
      - 識別恐慌高峰與復甦期
 
 2. **Entry Signals | 進場訊號**
+
    - **ENTRY_30**: VIX declined 30%+ from peak → Invest 30%
      - VIX 從高點回落 30%+ → 投入 30%
    - **ENTRY_60**: VIX declined 40%+ from peak → Invest 60%
@@ -147,13 +151,13 @@ VIX 監控器分析波動率趨勢並基於以下條件生成進場訊號：
 
 ### Fear & Greed Index Ratings | 恐懼與貪婪指數評級
 
-| Score Range 分數範圍 | Rating 評級 | Color 顏色 |
-|-------------|--------|-------|
-| 0-25 | Extreme Fear 極度恐慌 | Red 紅色 |
-| 26-45 | Fear 恐慌 | Orange 橙色 |
-| 46-55 | Neutral 中性 | Yellow 黃色 |
-| 56-75 | Greed 貪婪 | Light Green 淺綠色 |
-| 76-100 | Extreme Greed 極度貪婪 | Green 綠色 |
+| Score Range 分數範圍 | Rating 評級            | Color 顏色         |
+| -------------------- | ---------------------- | ------------------ |
+| 0-25                 | Extreme Fear 極度恐慌  | Red 紅色           |
+| 26-45                | Fear 恐慌              | Orange 橙色        |
+| 46-55                | Neutral 中性           | Yellow 黃色        |
+| 56-75                | Greed 貪婪             | Light Green 淺綠色 |
+| 76-100               | Extreme Greed 極度貪婪 | Green 綠色         |
 
 ## Historical Backtesting Results | 歷史回測結果
 
@@ -163,28 +167,32 @@ Our VIX entry timing strategy has been rigorously tested against **6 major marke
 
 ### Performance Summary | 表現總結
 
-| Event 事件 | VIX Peak 峰值 | Performance 表現 | Key Insight 關鍵洞察 |
-|-------|----------|-------------|-------------|
-| 2011 US Debt Crisis<br>2011 美國債務危機 | 48.0 | ✅ **Excellent 優異** | Perfect gradual entry (30%→60%→100%)<br>完美的漸進式進場 |
-| 2018 Volmageddon<br>2018 波動率崩盤 | 50.3 | ✅ **Good 良好** | Filtered out technical panic effectively<br>有效過濾技術性恐慌 |
-| 2015 China Crisis<br>2015 中國股災 | 53.3 | ✅ **Good 良好** | Handled short-term shock appropriately<br>妥善處理短期衝擊 |
-| **2025 Trump Tariff<br>2025 川普關稅** | **60.1** | ✅ **Excellent 優異** | **Filtered 35% single-day VIX drop, waited for trend confirmation**<br>**過濾單日 35% 暴跌，等待趨勢確認** |
-| 2020 COVID-19<br>2020 新冠疫情 | 82.7 | ⚠️ Conservative 保守 | Missed optimal entry but protected capital during chaos<br>錯過最佳進場點但在混亂期保護資金 |
-| 2008 Financial Crisis<br>2008 金融危機 | 89.5 | ⚠️ Conservative 保守 | Slow signals but avoided premature entry<br>訊號較慢但避免過早進場 |
+| Event 事件                               | VIX Peak 峰值 | Performance 表現      | Key Insight 關鍵洞察                                                                                       |
+| ---------------------------------------- | ------------- | --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 2011 US Debt Crisis<br>2011 美國債務危機 | 48.0          | ✅ **Excellent 優異** | Perfect gradual entry (30%→60%→100%)<br>完美的漸進式進場                                                   |
+| 2018 Volmageddon<br>2018 波動率崩盤      | 50.3          | ✅ **Good 良好**      | Filtered out technical panic effectively<br>有效過濾技術性恐慌                                             |
+| 2015 China Crisis<br>2015 中國股災       | 53.3          | ✅ **Good 良好**      | Handled short-term shock appropriately<br>妥善處理短期衝擊                                                 |
+| **2025 Trump Tariff<br>2025 川普關稅**   | **60.1**      | ✅ **Excellent 優異** | **Filtered 35% single-day VIX drop, waited for trend confirmation**<br>**過濾單日 35% 暴跌，等待趨勢確認** |
+| 2020 COVID-19<br>2020 新冠疫情           | 82.7          | ⚠️ Conservative 保守  | Missed optimal entry but protected capital during chaos<br>錯過最佳進場點但在混亂期保護資金                |
+| 2008 Financial Crisis<br>2008 金融危機   | 89.5          | ⚠️ Conservative 保守  | Slow signals but avoided premature entry<br>訊號較慢但避免過早進場                                         |
 
 ### Key Strengths | 核心優勢
 
 ✅ **Optimal for VIX 30-60 range** (covers 95%+ of market scenarios)
-   - **最適合 VIX 30-60 區間**（涵蓋 95%+ 市場情境）
+
+- **最適合 VIX 30-60 區間**（涵蓋 95%+ 市場情境）
 
 ✅ **Filters policy-driven single-day volatility** (proven in 2025 tariff event)
-   - **過濾政策驅動的單日波動**（2025 關稅事件實證）
+
+- **過濾政策驅動的單日波動**（2025 關稅事件實證）
 
 ✅ **Requires trend confirmation** (5+ consecutive declining days)
-   - **要求趨勢確認**（連續 5 天以上下降）
+
+- **要求趨勢確認**（連續 5 天以上下降）
 
 ✅ **Handles rapid V-shaped reversals** (complete recovery within 5 days)
-   - **處理快速 V 型反轉**（5 天內完成復甦）
+
+- **處理快速 V 型反轉**（5 天內完成復甦）
 
 ### 2025 Trump Tariff Crisis - Real-World Validation | 2025 川普關稅危機 - 實戰驗證
 
@@ -193,9 +201,11 @@ This recent event perfectly demonstrates our system's robustness:
 這次最新事件完美展示了我們系統的穩健性：
 
 - **4/2-4/7**: VIX surged 45→60 → **STAY_OUT** (panic accelerating)
+
   - **4/2-4/7**：VIX 從 45 飆升至 60 → **觀望**（恐慌加劇中）
 
 - **4/9**: Trump announced 90-day tariff pause, VIX crashed -35.75% in single day → **ENTRY_60** (only 2 days declining, need confirmation)
+
   - **4/9**：川普宣布 90 天關稅暫停，VIX 單日暴跌 -35.75% → **投入 60%**（僅下降 2 天，需要確認）
 
 - **4/14**: 5 consecutive declining days confirmed, -57% from peak → **ENTRY_100** (trend validated)
