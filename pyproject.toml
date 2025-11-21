@@ -1,11 +1,12 @@
 [project]
 name = "fear-greed-notifier"
-version = "0.1.0"
-description = "CNN Fear & Greed Index notifier for Discord"
+version = "0.2.0"
+description = "Fear & Greed + VIX Market Signal notifier for Discord"
 requires-python = ">=3.11"
 dependencies = [
     "aiohttp>=3.9.0",
     "python-dotenv>=1.2.1",
+    "yfinance>=0.2.0",
 ]
 
 [build-system]
@@ -13,4 +14,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
+packages = ["src"]
+
+[project.scripts]
+fear-greed-notifier = "src.main:run"
