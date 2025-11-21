@@ -71,44 +71,101 @@ fear-greed-notifier/
 └── .env                   # Environment variables
 ```
 
-## Installation
+## Getting Started | 開始使用
 
-### Prerequisites
+### Step 1: Fork this Repository | 第一步：Fork 此專案
+
+1. Click the **Fork** button at the top right of this page
+   - 點擊頁面右上角的 **Fork** 按鈕
+2. This creates your own copy of the project
+   - 這會建立一份您自己的專案副本
+
+### Step 2: Create Discord Webhook | 第二步：建立 Discord Webhook
+
+You need a Discord webhook URL to receive notifications.
+
+您需要 Discord webhook URL 來接收通知。
+
+**Tutorial | 教學**: [How to Create a Discord Webhook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+
+**Quick Steps | 快速步驟**:
+1. Open your Discord server and go to Server Settings
+   - 開啟您的 Discord 伺服器並進入伺服器設定
+2. Navigate to **Integrations** → **Webhooks**
+   - 導航至 **整合** → **Webhooks**
+3. Click **New Webhook** or **Create Webhook**
+   - 點擊 **新增 Webhook** 或 **建立 Webhook**
+4. Choose the channel where you want to receive notifications
+   - 選擇您想要接收通知的頻道
+5. Copy the **Webhook URL**
+   - 複製 **Webhook URL**
+
+### Step 3: Configure GitHub Actions | 第三步：設定 GitHub Actions
+
+Add your Discord webhook URL to your forked repository:
+
+將您的 Discord webhook URL 添加到您 fork 的專案中：
+
+1. Go to your forked repository on GitHub
+   - 前往您在 GitHub 上 fork 的專案
+2. Click **Settings** → **Secrets and variables** → **Actions**
+   - 點擊 **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+   - 點擊 **New repository secret**
+4. Add the following secret:
+   - 添加以下 secret：
+   - **Name** 名稱: `DISCORD_WEBHOOK_URL`
+   - **Value** 值: Your Discord webhook URL (paste the URL you copied)
+     - 您的 Discord webhook URL（貼上您複製的 URL）
+
+### Step 4: Enable GitHub Actions | 第四步：啟用 GitHub Actions
+
+1. Go to the **Actions** tab in your forked repository
+   - 前往您 fork 專案中的 **Actions** 標籤
+2. Click **I understand my workflows, enable them**
+   - 點擊 **I understand my workflows, enable them**
+3. The notifications will now run automatically twice daily
+   - 通知現在會每天自動執行兩次
+
+**Manual Trigger | 手動觸發**:
+- You can also trigger the workflow manually from the Actions tab
+  - 您也可以從 Actions 標籤手動觸發工作流程
+
+### Step 5: Test Your Setup (Optional) | 第五步：測試您的設定（選填）
+
+To test locally before relying on GitHub Actions:
+
+在依賴 GitHub Actions 之前進行本地測試：
+
+#### Prerequisites | 先決條件
 
 - Python 3.11+
 - [uv](https://github.com/astral-sh/uv) package manager
 
-### Local Installation
+#### Local Installation | 本地安裝
 
 ```bash
+# Clone your forked repository
+# 複製您 fork 的專案
+git clone https://github.com/YOUR_USERNAME/fear-greed-notifier.git
+cd fear-greed-notifier
+
 # Install dependencies
+# 安裝依賴
 uv sync
 
-# Run
+# Create .env file
+# 建立 .env 檔案
+echo "DISCORD_WEBHOOK_URL=your_webhook_url_here" > .env
+
+# Run the script
+# 執行腳本
 uv run python main.py
 ```
 
-## Configuration
+If everything is set up correctly, you should receive a notification in your Discord channel!
 
-### Environment Variables
-
-| Variable              | Description         |
-| --------------------- | ------------------- |
-| `DISCORD_WEBHOOK_URL` | Discord Webhook URL |
-
-### Local Execution
-
-Create a `.env` file:
-
-```env
-DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
-```
-
-### GitHub Actions
-
-Add the following secret in Repository Settings > Secrets and variables > Actions:
-
-- `DISCORD_WEBHOOK_URL`: Your Discord Webhook URL
+如果一切設定正確，您應該會在 Discord 頻道中收到通知！
 
 ## Schedule
 
@@ -121,7 +178,7 @@ You can also trigger it manually from the GitHub Actions page.
 
 ## How It Works | 運作原理
 
-### VIX Signal Logic (Plan B) | VIX 訊號邏輯（方案 B）
+### VIX Signal Logic | VIX 訊號邏輯
 
 The VIX monitor analyzes volatility trends and generates entry signals based on:
 
