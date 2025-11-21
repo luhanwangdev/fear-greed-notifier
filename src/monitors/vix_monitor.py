@@ -27,7 +27,7 @@ class VIXMonitor:
         self.PANIC_THRESHOLD = 35
         self.EXTREME_PANIC_THRESHOLD = 45
 
-        # 進場訊號閾值（方案 B）
+        # 進場訊號閾值
         self.PEAK_DECLINE_30 = 0.30  # 從高點回落30% → ENTRY_30
         self.PEAK_DECLINE_40 = 0.40  # 從高點回落40% → ENTRY_60
         self.PEAK_DECLINE_50 = 0.50  # 從高點回落50% → ENTRY_100
@@ -146,7 +146,7 @@ class VIXMonitor:
 
     def generate_signal(self) -> MarketSignal:
         """
-        生成進場訊號（方案 B 修改版）
+        生成進場訊號
 
         Returns:
             MarketSignal: 市場訊號和建議
@@ -160,99 +160,99 @@ class VIXMonitor:
                 vix_peak=None,
                 vix_change_from_peak=None,
                 days_declining=0,
-                reason="無數據",
-                risk_level="未知"
+                reason="無數據 / No data",
+                risk_level="未知 / Unknown"
             )
 
         phase = self.detect_phase()
         peak_vix = self.get_peak_vix(days=30)
         declining_days = self.get_declining_days()
 
-        # 計算從高點回落百分比
+        # Calculate decline percentage from peak
         change_from_peak = None
         if peak_vix and peak_vix > 0:
             change_from_peak = (peak_vix - current_vix) / peak_vix
 
-        # 判斷進場訊號
+        # Determine entry signal
         signal = Signal.STAY_OUT
         reason = ""
-        risk_level = "高"
+        risk_level = "高 / High"
 
         if phase == MarketPhase.PANIC_FALLING:
-            # 方案 B：回落 50%+ → ENTRY_100
+            # 50%+ decline → ENTRY_100
             if change_from_peak and change_from_peak >= self.PEAK_DECLINE_50:
                 if declining_days >= self.MIN_DECLINING_DAYS:
                     signal = Signal.ENTRY_100
-                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，最恐慌已過，可全部進場"
-                    risk_level = "低"
+                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，最恐慌已過，可全部進場 / VIX dropped {change_from_peak*100:.1f}% from peak {peak_vix:.1f}, worst panic over, full entry ready"
+                    risk_level = "低 / Low"
                 else:
                     signal = Signal.ENTRY_60
-                    reason = f"VIX回落{change_from_peak*100:.1f}%但僅{declining_days}天，建議先投入60%，確認趨勢後再加碼"
-                    risk_level = "中"
+                    reason = f"VIX回落{change_from_peak*100:.1f}%但僅{declining_days}天，建議先投入60%，確認趨勢後再加碼 / VIX dropped {change_from_peak*100:.1f}% but only {declining_days} days, suggest 60% first"
+                    risk_level = "中 / Medium"
 
-            # 回落 40-50% → ENTRY_60
+            # 40-50% decline → ENTRY_60
             elif change_from_peak and change_from_peak >= self.PEAK_DECLINE_40:
                 if declining_days >= self.MIN_DECLINING_DAYS:
                     signal = Signal.ENTRY_60
-                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，可投入60%"
-                    risk_level = "中"
+                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，可投入60% / VIX dropped {change_from_peak*100:.1f}% from peak {peak_vix:.1f}, 60% entry"
+                    risk_level = "中 / Medium"
                 else:
                     signal = Signal.PREPARE
-                    reason = f"VIX回落{change_from_peak*100:.1f}%但僅{declining_days}天，做好準備但確認趨勢"
-                    risk_level = "中"
+                    reason = f"VIX回落{change_from_peak*100:.1f}%但僅{declining_days}天，做好準備但確認趨勢 / VIX dropped {change_from_peak*100:.1f}% but only {declining_days} days, prepare and confirm trend"
+                    risk_level = "中 / Medium"
 
-            # 回落 30-40% → ENTRY_30
+            # 30-40% decline → ENTRY_30
             elif change_from_peak and change_from_peak >= self.PEAK_DECLINE_30:
                 if declining_days >= self.MIN_DECLINING_DAYS:
                     signal = Signal.ENTRY_30
-                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，可小量試單30%"
-                    risk_level = "中"
+                    reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，可小量試單30% / VIX dropped {change_from_peak*100:.1f}% from peak {peak_vix:.1f}, 30% trial entry"
+                    risk_level = "中 / Medium"
                 else:
                     signal = Signal.WATCH_CLOSELY
-                    reason = f"VIX回落{change_from_peak*100:.1f}%但趨勢未確認（僅{declining_days}天）"
-                    risk_level = "高"
+                    reason = f"VIX回落{change_from_peak*100:.1f}%但趨勢未確認（僅{declining_days}天） / VIX dropped {change_from_peak*100:.1f}% but trend unconfirmed (only {declining_days} days)"
+                    risk_level = "高 / High"
             else:
                 signal = Signal.WATCH_CLOSELY
-                reason = f"VIX開始下降但回落幅度不足30%（當前{change_from_peak*100:.1f}%）"
-                risk_level = "高"
+                reason = f"VIX開始下降但回落幅度不足30%（當前{change_from_peak*100:.1f}%） / VIX declining but drop less than 30% (current {change_from_peak*100:.1f}%)"
+                risk_level = "高 / High"
 
         elif phase == MarketPhase.PANIC_PEAK:
             signal = Signal.WATCH_CLOSELY
-            reason = f"VIX達到極端水平{current_vix:.1f}，等待回落訊號"
-            risk_level = "高"
+            reason = f"VIX達到極端水平{current_vix:.1f}，等待回落訊號 / VIX at extreme level {current_vix:.1f}, waiting for decline signal"
+            risk_level = "高 / High"
 
         elif phase == MarketPhase.PANIC_RISING:
             signal = Signal.STAY_OUT
-            reason = f"VIX持續上升(連續{self.get_rising_days()}天)，恐慌加劇中"
-            risk_level = "極高"
+            reason = f"VIX持續上升(連續{self.get_rising_days()}天)，恐慌加劇中 / VIX rising continuously ({self.get_rising_days()} days), panic intensifying"
+            risk_level = "極高 / Very High"
 
         elif phase == MarketPhase.RECOVERY:
-            # RECOVERY 階段也檢查回落百分比（方案 B 核心邏輯）
+            # RECOVERY phase also checks decline percentage
             if change_from_peak and change_from_peak >= self.PEAK_DECLINE_50:
-                # 回落 50%+ → ENTRY_100（即使 VIX 還在 20-35 之間）
+                # 50%+ decline → ENTRY_100 (even if VIX still in 20-35 range)
                 signal = Signal.ENTRY_100
-                reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，最恐慌已過"
-                risk_level = "低"
+                reason = f"VIX從高點{peak_vix:.1f}回落{change_from_peak*100:.1f}%，最恐慌已過 / VIX dropped {change_from_peak*100:.1f}% from peak {peak_vix:.1f}, worst panic over"
+                risk_level = "低 / Low"
             elif current_vix < self.CALM_THRESHOLD:
                 # VIX < 20 → ENTRY_100
                 signal = Signal.ENTRY_100
-                reason = f"VIX已回落至{current_vix:.1f}，市場恢復平靜"
-                risk_level = "低"
+                reason = f"VIX已回落至{current_vix:.1f}，市場恢復平靜 / VIX declined to {current_vix:.1f}, market calm restored"
+                risk_level = "低 / Low"
             else:
-                # VIX 20-35 且回落不足50% → ENTRY_60
+                # VIX 20-35 and decline < 50% → ENTRY_60
                 signal = Signal.ENTRY_60
-                reason = f"VIX持續回落至{current_vix:.1f}，復甦中"
-                risk_level = "中"
+                reason = f"VIX持續回落至{current_vix:.1f}，復甦中 / VIX declining to {current_vix:.1f}, recovering"
+                risk_level = "中 / Medium"
 
         elif phase == MarketPhase.TENSION:
             signal = Signal.STAY_OUT
-            reason = f"VIX={current_vix:.1f}，市場緊張但未恐慌"
-            risk_level = "高"
+            reason = f"VIX={current_vix:.1f}，市場緊張但未恐慌 / VIX={current_vix:.1f}, market tense but not panic"
+            risk_level = "高 / High"
 
         else:  # CALM
             signal = Signal.NORMAL
-            reason = f"VIX={current_vix:.1f}，市場平靜"
-            risk_level = "低"
+            reason = f"VIX={current_vix:.1f}，市場平靜 / VIX={current_vix:.1f}, market calm"
+            risk_level = "低 / Low"
 
         return MarketSignal(
             phase=phase,

@@ -382,7 +382,7 @@ def main():
     """執行所有回測場景"""
     print("\n" + "#"*70)
     print("# VIX 進場邏輯歷史回測")
-    print("# 測試方案B的實際表現")
+    print("# Historical Backtest of VIX Entry Logic")
     print("#"*70)
 
     # 執行所有測試場景
