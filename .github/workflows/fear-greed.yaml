@@ -1,4 +1,4 @@
-name: Fear & Greed Index Notifier
+name: Fear & Greed + VIX Market Signal Notifier
 
 on:
   schedule:
@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Run Fear & Greed Index notifier
+      - name: Run market signal notifier
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: uv run python main.py
