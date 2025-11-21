@@ -7,9 +7,9 @@ This document compiles historical major market panic events to test the effectiv
 
 ## Testing Methodology | 測試方法
 
-Core rules of our entry logic (Plan B):
+Core rules of our entry logic:
 
-你的進場邏輯（方案 B）核心規則：
+進場邏輯核心規則：
 
 - **30% decline from peak** → Invest 30% (ENTRY_30)
   - **從高點回落 30%** → 投入 30% (ENTRY_30)
