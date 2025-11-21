@@ -4,6 +4,19 @@ Comprehensive market analysis tool that combines CNN Fear & Greed Index with VIX
 
 結合 CNN 恐懼與貪婪指數與 VIX 波動率分析的綜合市場分析工具，提供可執行的交易訊號。
 
+> ⚠️ **DISCLAIMER | 免責聲明**
+>
+> **This is a hobby project for educational purposes only. NOT financial advice.**
+>
+> **這是一個玩票性質的教育專案，並非投資建議。**
+>
+> - All trading signals are for reference only. Do your own research before making any investment decisions.
+>   - 所有交易訊號僅供參考。在做出任何投資決定前請自行研究。
+> - Past performance does not guarantee future results. Markets are unpredictable.
+>   - 過去表現不代表未來結果。市場無法預測。
+> - The author assumes no responsibility for any financial losses incurred from using this tool.
+>   - 作者不對使用此工具產生的任何財務損失負責。
+
 > ✅ **Backtested across 6 major crises (2008-2025)** | 95%+ accuracy in VIX 30-60 range | Proven in 2025 Trump tariff event
 >
 > ✅ **已通過 6 次重大危機回測（2008-2025）** | VIX 30-60 區間準確率 95%+ | 2025 川普關稅事件實證
